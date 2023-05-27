@@ -24,8 +24,8 @@ request(url, (error, response, body) => {
     fs.stat(localFilePath, (err, stats) => {
       if (err) {
         console.error(err);
-      };
-      console.log(`Downloaded and saved ${stats.size} bytes to ${localFilePath}`)
+      }
+      console.log(`Downloaded and saved ${stats.size} bytes to ${localFilePath}`);
     });
   });
 });
