@@ -1,43 +1,22 @@
 //Saves the command line arguements into variables 
-// const url = process.argv[2]
-// const localFilePath = process.argv[3]
+const url = `http://${process.argv[2]}`
+const localFilePath = process.argv[3]
 
 // //set up basic client code connection and write a file
-// const net = require('net');
 const fs = require('fs');
+const request = require('request');
 
 // //Create the connection with the url provided in the command line
-// const conn = net.createConnection({ 
-//   host: url,
-//   port: 80
-// });
-
-// conn.setEncoding('UTF8');
-
-//attempting to write the content to the file
-const content = 'This is some new and updated content';
-
-fs.writeFile('/Users/mattyu/Desktop/test/test.txt', content, err => {
+request(url, (error, response, body) => {  
+  if (error) {
+    console.log('Error:', error); // Print the error if one occurred
+  }
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  
+  //Write what you get from the request to the specified file path
+  fs.writeFile(localFilePath, body, err => {
   if (err) {
     console.error(err);
-  }
-  // file written successfully
+    }
+  });
 });
-
-
-
-
-//Sends a request over to the server -- This code we get will return the index.html code 
-// conn.on('connect', () => {
-//   console.log(`Connected to server!`);
-
-//   conn.write(`GET / HTTP/1.1\r\n`);
-//   conn.write(`Host: ${url}\r\n`);
-//   conn.write(`\r\n`);
-// });
-
-//This will take the data that we receive from the server and console.log it 
-// conn.on('data', (data) => {
-//   console.log(data);
-//   conn.end();
-// });
