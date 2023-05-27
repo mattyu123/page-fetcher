@@ -15,9 +15,18 @@ request(url, (error, response, body) => {
   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
   
   //Write what you get from the request to the specified file path
-  fs.writeFile(localFilePath, body, err => {
-    if (err) {
-      console.error(err);
+  fs.writeFile(localFilePath, body, error => {
+    if (error) {
+      console.error(error);
     }
+    
+    //Print out final statement saying that the download was successful and how many bytes the file was
+    fs.stat(localFilePath, (err, stats) => {
+      if (err) {
+        console.error(err);
+      };
+      console.log(`Downloaded and saved ${stats.size} bytes to ${localFilePath}`)
+    });
   });
 });
+  
